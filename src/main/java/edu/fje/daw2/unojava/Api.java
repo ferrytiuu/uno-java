@@ -33,7 +33,7 @@ public class Api {
 
 
         Partida partida = new Partida(id);
-        if(partidas.contains(partida.id)) return Response.status(200).entity("La partida ja existeix. Uneix-t'hi").build();
+        if(partidas.contains(partida)) return Response.status(200).entity("La partida ja existeix. Uneix-t'hi").build();
         else{
             partidas.add(partida);
             return Response.status(200).entity(partidas.toString()).build();
