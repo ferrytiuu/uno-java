@@ -35,4 +35,12 @@ public class Carta {
     public void eliminarPila(Partida partida){
         this.pilas.remove(partida);
     }
+
+    @Override
+    public String toString() {
+        return "Carta{" +
+                "color='" + color + '\''+
+                ", numero=" + numero +
+                '}'+"\n";
+    }
 }

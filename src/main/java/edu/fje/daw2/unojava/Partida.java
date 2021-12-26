@@ -24,6 +24,7 @@ public class Partida {
     }
     public void  afegirJugador(Jugador jugador){
         this.jugadores.add(jugador);
+        this.NumJugadores= this.jugadores.size();
     }
     public void  eliminarCarta(Carta carta){
         this.cartas.remove(carta);
@@ -33,6 +34,7 @@ public class Partida {
     }
     public void  eliminarJugador(Jugador jugador){
         this.jugadores.remove(jugador);
+        this.NumJugadores= this.jugadores.size();
     }
 
     public int getNumJugadores() {
