@@ -101,6 +101,33 @@ public class Api {
 
     }
 
+    @Path("/tirarCarta")
+    @PUT
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces({MediaType.TEXT_PLAIN, MediaType.TEXT_PLAIN})
+    public Response unirsePartida(@FormParam("jugador") String id_jugador, @FormParam("numcarta") String num, @FormParam("colorcarta") String color) {
+        for (Partida partida: partidas){
+
+            int id_jugador_temp = Integer.parseInt(id_jugador);
+            int num_temp = Integer.parseInt(num);
+            String color_temp = color;
+
+            if(!partida.jugadores.contains(new Jugador(id_jugador_temp))) continue;
+            Jugador jugador_temp = partida.jugadores.get(partida.jugadores.indexOf(new Jugador(id_jugador_temp)));
+
+            if (!jugador_temp.cartasJugador.contains(new Carta(num_temp,color_temp))) continue;
+            Carta carta_llencar = jugador_temp.cartasJugador.get(jugador_temp.cartasJugador.indexOf(new Carta(num_temp, color_temp)));
+
+            partida.afegirPila(carta_llencar);
+            carta_llencar.eliminarJugador(jugador_temp);
+            jugador_temp.eliminarCarta(carta_llencar);
+
+            ComprobarEstado(partida,jugador_temp);
+            return Response.status(200).entity("Carta a llençar: "+carta_llencar.toString()).build();
+        }
+        return Response.status(404).entity("Partida no trobada").build();
+    }
+
 
 
     /*
