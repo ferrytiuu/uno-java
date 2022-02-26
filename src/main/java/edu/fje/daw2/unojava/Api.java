@@ -180,24 +180,15 @@ public class Api {
         return menu;
     }
 
-    /*@GET
-    @Produces({MediaType.TEXT_HTML})
+    @GET
+    @Produces({MediaType.TEXT_PLAIN})
     @Path("/menujs")
     public InputStream menujs()
     {
         InputStream menu = (getClass().getClassLoader().getResourceAsStream("menu.js"));
         return menu;
-    }*/
-
-
-    /*
-    @Path("/consultarTOTS")
-    @GET
-    public String consultarTotsAlumnes() {
-        return alumnes.toString();
     }
 
-     */
     @GET
     @Path("/hello-world")
     @Produces("text/plain")
