@@ -46,6 +46,10 @@ public class Partida {
         return id;
     }
 
+    public ArrayList<Carta> getPila() {
+        return this.pila;
+    }
+
     @Override
     public boolean equals(Object o){
         if (o == this) {

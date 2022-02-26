@@ -6,6 +6,9 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
+import java.io.File;
+import java.io.InputStream;
+import java.net.URI;
 import java.util.ArrayList;
 
 @Path("/uno-java")
@@ -91,7 +94,6 @@ public class Api {
             jugador_temp.afegirCarta(carta_temp);
             partida.eliminarCarta(carta_temp);
 
-            carta_temp.eliminarPartida(partida);
             carta_temp.afegirJugador(jugador_temp);
 
             ComprobarEstado(partida,jugador_temp);
@@ -115,7 +117,7 @@ public class Api {
             if(!partida.jugadores.contains(new Jugador(id_jugador_temp))) continue;
             Jugador jugador_temp = partida.jugadores.get(partida.jugadores.indexOf(new Jugador(id_jugador_temp)));
 
-            if (!jugador_temp.cartasJugador.contains(new Carta(num_temp,color_temp))) continue;
+            if (!jugador_temp.cartasJugador.contains(new Carta(num_temp,color_temp))) return Response.status(404).entity("Carta no trobada").build();
             Carta carta_llencar = jugador_temp.cartasJugador.get(jugador_temp.cartasJugador.indexOf(new Carta(num_temp, color_temp)));
 
             partida.afegirPila(carta_llencar);
@@ -125,9 +127,39 @@ public class Api {
             ComprobarEstado(partida,jugador_temp);
             return Response.status(200).entity("Carta a llençar: "+carta_llencar.toString()).build();
         }
-        return Response.status(404).entity("Partida no trobada").build();
+        return Response.status(404).entity("Jugador no trobat").build();
     }
 
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/comprobarPila/{codiPartida}")
+    public String comprobarPila(@PathParam("codiPartida") int id) {
+
+        Partida partida_temp = new Partida(id);
+        if (!partidas.contains(partida_temp)) return ("La partida no existeix");
+        int posicio = partidas.indexOf(partida_temp);
+
+        return (partidas.get(posicio).getPila().toString());
+
+    }
+
+    @GET
+    @Produces({MediaType.TEXT_HTML})
+    @Path("/menu")
+    public InputStream menu()
+    {
+        InputStream menu = (getClass().getClassLoader().getResourceAsStream("menu.html"));
+        return menu;
+    }
+
+    /*@GET
+    @Produces({MediaType.TEXT_HTML})
+    @Path("/menujs")
+    public InputStream menujs()
+    {
+        InputStream menu = (getClass().getClassLoader().getResourceAsStream("menu.js"));
+        return menu;
+    }*/
 
 
     /*
@@ -144,7 +176,6 @@ public class Api {
     public String hello() {
         return "Hello, World!";
     }
-
 
     public void ComprobarEstado(Partida partida_temp, Jugador jugador_temp){
         System.out.println(partida_temp);
