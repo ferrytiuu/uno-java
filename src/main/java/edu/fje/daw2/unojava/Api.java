@@ -144,6 +144,34 @@ public class Api {
     }
 
     @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/comprobarCartas/{jugador}")
+    public String comprobarCartas(@PathParam("jugador") String id_jugador) {
+        for (Partida partida: partidas){
+            int id_jugador_temp = Integer.parseInt(id_jugador);
+
+            if(!partida.jugadores.contains(new Jugador(id_jugador_temp))) continue;
+            Jugador jugador_temp = partida.jugadores.get(partida.jugadores.indexOf(new Jugador(id_jugador_temp)));
+
+            return (jugador_temp.cartasJugador.toString());
+        }
+        return ("Jugador no trobat");
+    }
+
+    @DELETE
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/acabarJoc/{idPartida}")
+    public String acabarJoc(@PathParam("idPartida") String id_partida) {
+        for (Partida partida: partidas){
+            if(partida.id==Integer.parseInt(id_partida)){
+                partidas.remove(partida);
+            }
+            return ("Partida esborrada");
+        }
+        return ("Partida no trobada");
+    }
+
+    @GET
     @Produces({MediaType.TEXT_HTML})
     @Path("/menu")
     public InputStream menu()
