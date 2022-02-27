@@ -90,7 +90,11 @@ function carga() {
 
         fetch(url, requestOptions)
             .then(response => response.text())
-            .then(result => console.log(result))
+            .then(result => {
+                let resultado = (result)
+                console.log(resultado);
+                document.getElementById("cartes-jugador").innerHTML = resultado;
+            })
             .catch(error => console.log('error', error));
     });
 
@@ -138,7 +142,11 @@ function carga() {
 
         fetch(url, requestOptions)
             .then(response => response.text())
-            .then(result => console.log(result))
+            .then(result => {
+                let resultado = (result)
+                console.log(resultado);
+                document.getElementById("cartes-pila").innerHTML = resultado;
+            })
             .catch(error => console.log('error', error));
     });
 
